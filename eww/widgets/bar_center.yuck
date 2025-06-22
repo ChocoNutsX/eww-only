@@ -1,0 +1,23 @@
+;; ~/.config/eww/widgets/bar_center.yuck
+;; Center section: Active Application + Clock
+
+(defwidget bar_center []
+  (box :class "center_section"
+       :orientation "h"
+       :space-evenly false
+       :spacing 20
+    (current_application)
+    (clock_widget)))
+
+;; ===== ACTIVE APPLICATION =====
+(defwidget current_application []
+  (box :class "current_workspace"
+    (label :class "workspace_name"
+           :text "${active_app}"
+           :limit-width 35)))
+
+;; ===== CLOCK =====
+(defwidget clock_widget []
+  (box :class "clock"
+    (label :class "time_display"
+           :text "${time}")))

@@ -1,0 +1,17 @@
+;; ~/.config/eww/widgets/bar_left.yuck
+;; Left section: Menu + Music + Dynamic Workspaces
+
+(defwidget bar_left []
+  (box :class "left_section"
+       :orientation "h"
+       :space-evenly false
+       :spacing 10
+    (menu_button)
+    (music_compact)
+    (dynamic_workspaces)))
+
+;; ===== MENU BUTTON =====
+(defwidget menu_button []
+  (button :class "menu_btn"
+          :onclick "scripts/toggle_menu.sh"
+    "☰"))

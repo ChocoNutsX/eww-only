@@ -1,0 +1,27 @@
+;; ~/.config/eww/widgets/menu/menu_power.yuck
+;; Power options section
+
+(defwidget menu_power_options []
+  (box :class "menu_power_section"
+       :orientation "v"
+       :space-evenly false
+    (label :class "section_title" :text "Power Options" :halign "start")
+    (box :class "power_grid"
+         :orientation "h"
+         :space-evenly true
+         :spacing 8
+      (power_button :icon "🔌" :name "Logout" :command "hyprctl dispatch exit")
+      (power_button :icon "😴" :name "Sleep" :command "systemctl suspend")
+      (power_button :icon "🔄" :name "Restart" :command "systemctl reboot")
+      (power_button :icon "⚡" :name "Shutdown" :command "systemctl poweroff"))))
+
+;; Reusable power button widget
+(defwidget power_button [icon name command]
+  (button :class "power_btn"
+          :tooltip "${name}"
+          :onclick "eww close menu_popup & ${command}"
+    (box :orientation "v"
+         :space-evenly false
+         :spacing 4
+      (label :class "power_icon" :text "${icon}")
+      (label :class "power_name" :text "${name}" :limit-width 8))))

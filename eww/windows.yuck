@@ -1,0 +1,39 @@
+;; ~/.config/eww/windows.yuck
+;; Window definitions
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "32px"
+                      :anchor "top center")
+  :reserve (struts :side "top" :distance "32px")
+  :stacking "fg"
+  :exclusive true
+  :stylesheet "./styles.css"
+  (bar_layout))
+
+;; Main bar layout - three sections
+(defwidget bar_layout []
+  (box :class "bar"
+       :orientation "h"
+       :space-evenly false
+    ;; Left section
+    (box :class "bar_left"
+         :halign "start"
+         :space-evenly false
+      (bar_left))
+    
+    ;; Center section  
+    (box :class "bar_center"
+         :halign "center"
+         :hexpand true
+      (bar_center))
+    
+    ;; Right section
+    (box :class "bar_right"
+         :halign "end"
+         :space-evenly false
+      (bar_right))))

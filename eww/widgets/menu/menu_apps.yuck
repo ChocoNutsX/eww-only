@@ -1,0 +1,48 @@
+;; ~/.config/eww/widgets/menu/menu_apps.yuck
+;; Applications sections
+
+;; Quick apps (top right, next to profile)
+(defwidget menu_quick_apps []
+  (box :class "quick_apps"
+       :orientation "v"
+       :space-evenly true
+       :spacing 8
+    (box :class "apps_row"
+         :orientation "h"
+         :space-evenly true
+         :spacing 6
+      (app_button :icon "🌐" :name "Firefox" :command "firefox")
+      (app_button :icon "📁" :name "Files" :command "nautilus"))
+    
+    (box :class "apps_row"
+         :orientation "h"
+         :space-evenly true
+         :spacing 6
+      (app_button :icon "💻" :name "Terminal" :command "kitty")
+      (app_button :icon "⚙️" :name "Settings" :command "gnome-control-center"))))
+
+;; Second row of apps (full width)
+(defwidget menu_apps_row []
+  (box :class "menu_apps_section"
+       :orientation "v"
+       :space-evenly false
+    (label :class "section_title" :text "Applications" :halign "start")
+    (box :class "apps_grid"
+         :orientation "h"
+         :space-evenly true
+         :spacing 8
+      (app_button :icon "🎵" :name "Music" :command "spotify")
+      (app_button :icon "📝" :name "Notes" :command "code")
+      (app_button :icon "󰸉" :name "WAYPAPER" :command "waypaper")
+      (app_button :icon "📊" :name "Calc" :command "gnome-calculator"))))
+
+;; Reusable app button widget
+(defwidget app_button [icon name command]
+  (button :class "app_btn"
+          :tooltip "${name}"
+          :onclick "${command} & eww close menu_popup"
+    (box :orientation "v"
+         :space-evenly false
+         :spacing 4
+      (label :class "app_icon" :text "${icon}")
+      (label :class "app_name" :text "${name}" :limit-width 8))))

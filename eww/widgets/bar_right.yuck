@@ -1,0 +1,25 @@
+;; ~/.config/eww/widgets/bar_right.yuck
+;; Right section: WiFi + Audio + Hub
+
+(defwidget bar_right []
+  (box :class "right_section"
+       :orientation "h"
+       :space-evenly false
+       :spacing 10
+    (audio_revealer)
+    (hub_button)))
+
+
+;; ===== AUDIO WIDGET =====
+(defwidget audio_widget []
+  (box :class "audio"
+    (button :class "audio_btn"
+            :onclick "echo 'Audio clicked! Add volume control here'"
+      (label :text "${audio_status}"))))
+
+;; ===== HUB BUTTON =====
+(defwidget hub_button []
+  (button :class "hub_btn"
+          :onclick "swaync-client -t -sw"
+          :tooltip "Notification Center"
+    "🔔"))

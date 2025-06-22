@@ -1,0 +1,45 @@
+;; Clean music widget - no cava, just music info and controls
+(defwidget music_compact []
+  (box :class "music_compact"
+       :orientation "h"
+       :space-evenly false
+       :spacing 8
+       :visible "${MUSIC_STATUS != 'stopped' ? true : false}"
+    ;; Music icon
+    (box :class "music_icon_container"
+         :width 32
+         :height 32
+      (label :class "music_icon ${MUSIC_STATUS == 'playing' ? 'playing' : 'paused'}"
+             :text "${MUSIC_STATUS == 'playing' ? '🎵' : '⏸️'}"))
+    
+    ;; Song info
+    (box :class "music_info"
+         :orientation "v"
+         :valign "center"
+         :space-evenly false
+      (label :class "song_title_small"
+             :text "${MUSIC_TITLE}"
+             :limit-width 20
+             :halign "start")
+      (label :class "song_artist_small"
+             :text "${MUSIC_ARTIST}"
+             :limit-width 20
+             :halign "start"))
+    
+    ;; Controls
+    (box :class "music_controls_small"
+         :orientation "h"
+         :spacing 4
+         :valign "center"
+      (button :class "control_btn_small"
+              :onclick "scripts/music/music.sh --prev"
+              :tooltip "Previous"
+        "⏮")
+      (button :class "control_btn_small play_pause_btn"
+              :onclick "scripts/music/music.sh --toggle"
+              :tooltip "${MUSIC_STATUS == 'playing' ? 'Pause' : 'Play'}"
+        "${MUSIC_STATUS == 'playing' ? '⏸' : '▶'}")
+      (button :class "control_btn_small"
+              :onclick "scripts/music/music.sh --next"
+              :tooltip "Next"
+        "⏭"))))

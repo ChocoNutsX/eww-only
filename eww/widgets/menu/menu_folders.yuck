@@ -1,0 +1,27 @@
+;; ~/.config/eww/widgets/menu/menu_folders.yuck
+;; Folders section
+
+(defwidget menu_folders []
+  (box :class "menu_folders_section"
+       :orientation "v"
+       :space-evenly false
+    (label :class "section_title" :text "Folders" :halign "start")
+    (box :class "folders_grid"
+         :orientation "h"
+         :space-evenly true
+         :spacing 8
+      (folder_button :icon "🏠" :name "Home" :path "$HOME")
+      (folder_button :icon "⬇️" :name "Downloads" :path "$HOME/Downloads")
+      (folder_button :icon "📄" :name "Documents" :path "$HOME/Documents")
+      (folder_button :icon "🖼️" :name "Pictures" :path "$HOME/Pictures"))))
+
+;; Reusable folder button widget
+(defwidget folder_button [icon name path]
+  (button :class "folder_btn"
+          :tooltip "Open ${name}"
+          :onclick "nautilus '${path}' & eww close menu_popup"
+    (box :orientation "v"
+         :space-evenly false
+         :spacing 4
+      (label :class "folder_icon" :text "${icon}")
+      (label :class "folder_name" :text "${name}" :limit-width 8))))

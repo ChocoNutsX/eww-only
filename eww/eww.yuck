@@ -1,0 +1,57 @@
+(deflisten bar_style "./styles.css")
+
+;; ~/.config/eww/eww.yuck
+;; Main eww configuration file
+
+;; ===== VARIABLES =====
+(defvar current_workspace "1")
+(defvar wifi_info "WiFi: Connecting...")
+;; REMOVED: (defvar audio_volume "🔊 50%")  ← DELETE THIS LINE
+
+;; ===== POLLS =====
+;; Update time every second
+(defpoll time :interval "1s" "date '+%I:%M %p | %e %b %Y' | sed 's/  / /g'")
+
+;; Update workspace info every 500ms
+(defpoll workspace_current :interval "500ms" "hyprctl activewindow | grep 'workspace:' | awk '{print $2}' || echo '1'")
+
+;; Update WiFi info every 5s
+(defpoll wifi_status :interval "5s" "scripts/get_wifi.sh")
+
+;; Get username once
+(defpoll username :interval "3600s" "whoami")
+
+;; Music information polls
+(defpoll MUSIC_TITLE :interval "2s" "scripts/music/music.sh --title")
+(defpoll MUSIC_ARTIST :interval "2s" "scripts/music/music.sh --artist")
+(defpoll MUSIC_STATUS :interval "1s" "scripts/music/music.sh --status")
+
+;; System information polls
+(defpoll cpu_usage :interval "2s" "scripts/get_cpu.sh")
+(defpoll ram_usage :interval "2s" "scripts/get_ram.sh") 
+(defpoll disk_usage :interval "10s" "scripts/get_disk.sh")
+(defpoll network_speed :interval "30s" "scripts/get_network_speed.sh")
+
+;; Dynamic workspaces
+(defpoll active_workspaces :interval "500ms" "scripts/workspaces/get_workspaces.sh")
+
+;; Active application info
+(defpoll active_app :interval "50ms" "scripts/center/get_active_app.sh")
+
+;; Enhanced audio polls for revealer widget
+(defpoll audio_volume :interval "500ms" "scripts/audio/audio_control.sh --volume")
+(defpoll audio_muted :interval "500ms" "scripts/audio/audio_control.sh --mute")
+(defpoll audio_device :interval "10s" "scripts/audio/audio_control.sh --device")
+
+;; Simple audio status (for backward compatibility)
+(defpoll audio_status :interval "2s" "scripts/audio/get_audio.sh")
+
+;; ===== INCLUDES =====
+(include "windows.yuck")
+(include "widgets/bar_left.yuck")
+(include "widgets/bar_center.yuck")
+(include "widgets/bar_right.yuck")
+(include "widgets/music/music_widget.yuck")
+(include "widgets/menu/menu_window.yuck")
+(include "widgets/workspaces/workspaces.yuck")
+(include "widgets/audio/audio_revealer.yuck")

@@ -1,0 +1,16 @@
+;; ~/.config/eww/widgets/workspaces/workspaces.yuck
+;; Dynamic workspace widget
+
+(defwidget dynamic_workspaces []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly false
+       :spacing 5
+    (for ws in "${active_workspaces}"
+      (workspace_button :ws ws))))
+
+(defwidget workspace_button [ws]
+  (button :class "${ws == workspace_current ? 'workspace_active' : 'workspace_used'}"
+          :onclick "hyprctl dispatch workspace ${ws}"
+          :tooltip "Workspace ${ws}"
+    "${ws}"))

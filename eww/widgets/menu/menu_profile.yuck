@@ -1,0 +1,18 @@
+;; ~/.config/eww/widgets/menu/menu_profile.yuck
+;; Profile picture section (top left)
+
+(defwidget menu_profile []
+  (box :class "menu_profile"
+       :orientation "v"
+       :space-evenly false
+    ;; Profile picture placeholder
+    (box :class "profile_pic"
+         :width 80
+         :height 80
+      (label :text "👤"
+             :class "profile_icon"))
+    
+    ;; Username (optional)
+    (label :class "username"
+           :text "${username}"
+           :limit-width 12)))

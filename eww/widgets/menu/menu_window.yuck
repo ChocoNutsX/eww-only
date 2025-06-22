@@ -1,0 +1,45 @@
+;; ~/.config/eww/widgets/menu/menu_window.yuck
+;; Menu popup window definition
+
+(defwindow menu_popup
+  :monitor 0
+  :stacking "overlay"
+  :windowtype "dialog"
+  :wm-ignore true
+  :geometry (geometry :x "10px"
+                      :y "35px"
+                      :width "320px"
+                      :height "480px"
+                      :anchor "top left")
+  (menu_container))
+
+;; Main menu container
+(defwidget menu_container []
+  (box :class "menu_popup"
+       :orientation "v"
+       :space-evenly false
+    ;; Top section - Profile pic + Quick apps
+    (box :class "menu_top"
+         :orientation "h"
+         :space-evenly false
+      (menu_profile)
+      (menu_quick_apps))
+    
+    ;; Second row of apps
+    (menu_apps_row)
+    
+    ;; Folders section
+    (menu_folders)
+    
+    ;; System information
+    (menu_system_info)
+    
+    ;; Power options
+    (menu_power_options)))
+
+;; Include all menu components
+(include "widgets/menu/menu_profile.yuck")
+(include "widgets/menu/menu_apps.yuck") 
+(include "widgets/menu/menu_folders.yuck")
+(include "widgets/menu/menu_system.yuck")
+(include "widgets/menu/menu_power.yuck")

@@ -1,0 +1,67 @@
+;; ~/.config/eww/widgets/audio/audio_revealer.yuck
+;; Advanced audio control with hover revealer pattern
+
+;; Variables for the audio revealer
+(defvar audio_hover false)
+
+;; Audio revealer widget - shows basic info, reveals controls on hover
+(defwidget audio_revealer []
+  (eventbox :class "audio_revealer_container"
+            :onhover "eww update audio_hover=true"
+            :onhoverlost "eww update audio_hover=false"
+    (box :class "audio_revealer_box"
+         :orientation "h"
+         :space-evenly false
+         :spacing 0
+      
+      ;; Always visible: Audio icon + volume text
+      (box :class "audio_basic"
+           :orientation "h"
+           :spacing 6
+        (button :class "audio_icon_btn ${audio_muted == 'true' ? 'muted' : ''}"
+                :onclick "scripts/audio/audio_control.sh --toggle-mute"
+                :tooltip "${audio_muted == 'true' ? 'Unmute' : 'Mute'}"
+          "${audio_muted == 'true' ? '🔇' : 
+            audio_volume > 70 ? '🔊' : 
+            audio_volume > 35 ? '🔉' : 
+            '🔈'}")
+        (label :class "audio_volume_text"
+               :text "${audio_volume}%"))
+      
+      ;; Revealed on hover: Volume slider + extra controls
+      (revealer :reveal audio_hover
+                :transition "slideright"
+                :duration "300ms"
+        (box :class "audio_controls_revealed"
+             :orientation "h"
+             :spacing 8
+          
+          ;; Volume slider
+          (scale :class "audio_slider"
+                 :orientation "h"
+                 :min 0
+                 :max 100
+                 :value audio_volume
+                 :onchange "scripts/audio/audio_control.sh --set-volume {}"
+                 :width 80)
+          
+          ;; Quick volume buttons
+          (box :class "audio_quick_controls"
+               :orientation "h"
+               :spacing 4
+            (button :class "audio_quick_btn"
+                    :onclick "scripts/audio/audio_control.sh --set-volume 25"
+                    :tooltip "25%"
+              "🔈")
+            (button :class "audio_quick_btn"
+                    :onclick "scripts/audio/audio_control.sh --set-volume 50"
+                    :tooltip "50%"
+              "🔉")
+            (button :class "audio_quick_btn"
+                    :onclick "scripts/audio/audio_control.sh --set-volume 75"
+                    :tooltip "75%"
+              "🔊")
+            (button :class "audio_quick_btn"
+                    :onclick "pavucontrol &"
+                    :tooltip "Open Volume Control"
+              "⚙")))))))

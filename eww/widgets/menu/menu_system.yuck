@@ -1,0 +1,33 @@
+;; ~/.config/eww/widgets/menu/menu_system.yuck
+;; System information section
+
+(defwidget menu_system_info []
+  (box :class "menu_system_section"
+       :orientation "v"
+       :space-evenly false
+    (label :class "section_title" :text "System Information" :halign "start")
+    (box :class "system_grid"
+         :orientation "v"
+         :space-evenly false
+         :spacing 6
+      ;; Row 1: CPU and RAM
+      (box :orientation "h"
+           :space-evenly true
+        (system_info_item :icon "🔥" :label "CPU" :value "${cpu_usage ?: 'N/A'}")
+        (system_info_item :icon "🧠" :label "RAM" :value "${ram_usage ?: 'N/A'}"))
+      
+      ;; Row 2: Disk and Network
+      (box :orientation "h"
+           :space-evenly true
+        (system_info_item :icon "💾" :label "Disk" :value "${disk_usage ?: 'N/A'}")
+        (system_info_item :icon "🌐" :label "Network" :value "${network_speed ?: 'N/A'}")))))
+
+;; Reusable system info item
+(defwidget system_info_item [icon label value]
+  (box :class "system_item"
+       :orientation "v"
+       :space-evenly false
+       :spacing 2
+    (label :class "system_icon" :text "${icon}")
+    (label :class "system_label" :text "${label}")
+    (label :class "system_value" :text "${value}" :limit-width 10)))
